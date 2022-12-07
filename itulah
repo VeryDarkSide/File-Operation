@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int angka(const char *num)
+{
+    int count=0,i,len;
+    len=strlen(num);
+    for(i=0; i<=len; i++)
+    {
+        if((num[i]==',' || num[i]=='\0'))
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+int *ascending(int *isi,int looping)
+{
+    int temp;
+    for (int i = looping-1; i >0 ; i--) {
+        for (int j = 0; j < i; ++j) {
+            if(isi[j]>isi[j+1])
+            {
+                temp = isi[j];
+                isi[j] =isi[j+1];
+                isi[j+1]=temp;
+            }
+        }
+    }
+    return isi;
+
+}
+
+int *descending(int *isi,int looping)
+{
+    int temp;
+    for (int i = looping-1; i >0 ; i--) {
+        for (int j = 0; j < i; ++j) {
+            if(isi[j]<isi[j+1])
+            {
+                temp = isi[j];
+                isi[j] =isi[j+1];
+                isi[j+1]=temp;
+            }
+        }
+    }
+    return isi;
+
+}
+
+main() {
+    FILE *fp;
+    fp = fopen("wena.txt", "r");
+    char temp[255];
+    while(fscanf(fp, "%s", temp)!=EOF)
+        printf("Data pada text adalah : %s\n", temp);
+    printf("Jumlah angka : %d\n",angka(temp) );
+
+    int akhir = angka(temp);
+    int fix[akhir];
+    int i = 0;
+
+    char *pt = strtok(temp, ",");
+    while (pt != NULL) {
+        int a = atoi(pt);
+        pt = strtok(NULL, ",");
+        fix[i]=a;
+        i++;
+    }
+
+    printf("Array berupa integer : ");
+    for (int j = 0; j < akhir; ++j) {
+        printf("%d ",fix[j]);
+    }
+
+    int *jadi;
+    jadi= ascending(fix,akhir);
+    printf("\nAscending : ");
+    for (int j = 0; j < akhir; ++j) {
+        printf("%d ", jadi[j]);
+
+    }
+    jadi= descending(fix,akhir);
+    printf("\nDescending : ");
+    for (int j = 0; j < akhir; ++j) {
+        printf("%d ", jadi[j]);
+    }
+}
+
